@@ -1,0 +1,144 @@
+[
+  {
+    "name": "id",
+    "type": "INTEGER",
+    "description": "Unique ID",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "date",
+    "type": "TIMESTAMP",
+    "description": "Date ordered",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "total",
+    "type": "RECORD",
+    "description": "Total",
+    "mode": "REQUIRED",
+    "fields": [
+      {
+        "name": "amount",
+        "type": "INTEGER",
+        "description": "Amount",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "currency",
+        "type": "STRING",
+        "description": "Currency",
+        "mode": "REQUIRED"
+      }
+    ]
+  },
+  {
+    "name": "items",
+    "type": "RECORD",
+    "description": "Items",
+    "mode": "REPEATED",
+    "fields": [
+      {
+        "name": "product",
+        "type": "INTEGER",
+        "description": "Product",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "brand",
+        "type": "STRING",
+        "description": "Brand",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "name",
+        "type": "STRING",
+        "description": "Name",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "price",
+        "type": "RECORD",
+        "description": "Price",
+        "mode": "REQUIRED",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "INTEGER",
+            "description": "Amount",
+            "mode": "REQUIRED"
+          },
+          {
+            "name": "currency",
+            "type": "STRING",
+            "description": "Currency",
+            "mode": "REQUIRED"
+          }
+        ]
+      },
+      {
+        "name": "qty",
+        "type": "INTEGER",
+        "description": "Qty",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "total",
+        "type": "RECORD",
+        "description": "Total",
+        "mode": "REQUIRED",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "INTEGER",
+            "description": "Amount",
+            "mode": "REQUIRED"
+          },
+          {
+            "name": "currency",
+            "type": "STRING",
+            "description": "Currency",
+            "mode": "REQUIRED"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "address",
+    "type": "RECORD",
+    "description": "Address",
+    "mode": "REQUIRED",
+    "fields": [
+      {
+        "name": "street",
+        "type": "STRING",
+        "description": "Street",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "city",
+        "type": "STRING",
+        "description": "City",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "region",
+        "type": "STRING",
+        "description": "Region",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "postal",
+        "type": "STRING",
+        "description": "Postal",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "description": "Country",
+        "mode": "REQUIRED"
+      }
+    ]
+  }
+]
