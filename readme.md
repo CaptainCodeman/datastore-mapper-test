@@ -51,14 +51,46 @@ GCS writing is done in buffered chunks so there is some overhead for each shard 
 is processed concurrently by any one instance. I found that an F2 instance could run
 4 requests concurrently and used around 200Mb of RAM.
 
-For 50 million entities and no limit to the number of concurrent shards:
+For 50 million entities and no effective limit to the number of concurrent shards:
 
-16 shards took around ~1.25 hours to complete.
-32 shards took around 40 minutes to complete.
+ 16 shards took around 80 minutes to complete.
+ 32 shards took around 40 minutes to complete.
+ 64 shards took around 20 minutes to complete.
 
-Both produced a ~30Gb json file and importing this into BigQuery took approximately
+On average each 10-minute shard request processed around 400,000 - 450,000 entities
+which works out to roughly 700 - 750 entities per second per shard.
+
+The operation consumed:
+
+    17.94 Instance Hours
+    50.03 Million Datastore Read Ops
+
+Costs were around $30 with the majority being datastore read operations. This could
+be reduced by doing a 'KeysOnly' iteration of the entity keys and loading them from
+memcache using quedus\nds although its effectiveness would depend on the proportion
+of data is typically cached. For frequent batch-updates of new data it could be an
+effective strategy.
+
+All produced a ~30Gb json file and importing this into BigQuery took approximately
 2 minutes. The schema.json is the BigQuery scheme definition used to define the table
 format.
+
+F4 instance (512Mb RAM)
+
+8-900,000 per shard request
+
+10 concurrent ~360Mb
+16 concurrent ~
+
+Suggested max concurrent requests per instance type for JSON exporting
+
+Class  Memory  Max
+F1      128Mb    2
+F2      256Mb    6
+F4      512Mb   16
+F4_1G  1024Mb   32
+
+TODO: Explain balance between memory use, performance and cost
 
 ### Export to BigQuery
 
@@ -84,3 +116,7 @@ composite index would be needed on the date + `__scatter__` special property use
 splitting the query range into shards.
 
 The table for the BigQuery export is created automatically in the example.
+
+## Mapper Options
+
+TODO: Effect of other mapper options such as request timeout
